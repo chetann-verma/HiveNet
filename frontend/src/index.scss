@@ -1,0 +1,43 @@
+:root {
+  --primary-color: #C40234;
+  --primary-color-dark: #A50021;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font: inherit;
+  color: inherit;
+}
+
+html {
+  font-family: Poppins, sans-serif;
+  background-color: #f4f2ee;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+button {
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+strong {
+  font-weight: 600;
+}
