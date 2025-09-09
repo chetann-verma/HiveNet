@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 export function Layout({children, className}: {children: ReactNode, className:string}) {  return (
 <div className={`${classes.root} ${className}`}><header className={classes.container}>
     <a href="/">
-    <img src="/logo.png" alt="" className={classes.logo}/>
+    <img src="/Logo.png" alt="" className={classes.logo}/>
     </a>
 </header>
 <main className={classes.container}>
@@ -13,8 +13,8 @@ export function Layout({children, className}: {children: ReactNode, className:st
 <footer>
     <ul className={classes.container}>
         <li>
-            <img src="/logo-dark.svg" alt=""/>
-             <span>© 2024</span>
+            <img src="/Footer_logo.png" alt=""/>
+             <span>© 2025</span>
           </li>
           <li>
             <a href="">Accessiblity</a>

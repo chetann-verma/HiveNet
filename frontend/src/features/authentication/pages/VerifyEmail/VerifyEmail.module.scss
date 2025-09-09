@@ -1,0 +1,78 @@
+.root {
+  /* This affects the whole VerifyEmail page background */
+  min-height: 100vh;
+  background: #0a0a0a;
+  background: radial-gradient(circle at top, #1a1a1a, #000);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.content {
+  /* This centers only the card, not header/footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px); /* leave space for header + footer */
+  padding: 2rem 1rem;
+}
+
+.card {
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 0, 0, 0.6);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 40px rgba(255, 0, 0, 0.4);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  animation: fadeIn 0.6s ease-in-out;
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #ff2e2e;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+  }
+}
+
+.success {
+  color: #00ff88;
+  font-size: 0.9rem;
+}
+
+.error {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+}
+
+.primary {
+  background: #ff2e2e;
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #e02020;
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(255, 0, 0, 1);
+  }
+}
+
+.secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 0, 0, 0.6);
+  color: #ff2e2e;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+  }
+}

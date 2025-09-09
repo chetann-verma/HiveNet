@@ -1,13 +1,18 @@
+import { useAuthentication } from '../../authentication/contexts/AuthenticationContextProvider';
 import classes from './Feed.module.scss';
 
 export function Feed()
 {
+    //grab the user 
+    const {user, logout} = useAuthentication();
     return (
         <div className={classes.root}>
             <header className={classes.header}>
-                <div>Hello user@example.com </div>
+                {/* the user email */}
+                <div>Hello {user?.email} </div>
                 <span>|</span>
-                <button>Logout</button>
+                {/* when click the logout () called */}
+                <button onClick={logout}>Logout</button>
             </header>
             <main className={classes.content}>
                 <div className={classes.left}></div>

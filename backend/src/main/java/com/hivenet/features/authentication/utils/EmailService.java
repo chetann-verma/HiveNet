@@ -23,7 +23,7 @@ public class EmailService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("no-reply@linkedin.com", "LinkedIn");
+        helper.setFrom("no-reply@hivenet.com", "HiveNet");
         helper.setTo(email);
 
         helper.setSubject(subject);

@@ -5,13 +5,19 @@
     gap: 0.5rem;
     width: 100%;
     padding: 1rem;
-    background-color: var(--primary-color);
+    background-color: black;
     color: white;
     border: none;
     border-radius: 9999px;
     margin-block: 1rem;
     font-weight: bold;
     transition: 0.3s;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 5px #562525, 0 0 10px #121010, 0 0 15px #672020;
+  }
 
     &:disabled{
         color: white;

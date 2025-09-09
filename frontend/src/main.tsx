@@ -12,10 +12,11 @@ import { AuthenticationContextProvider } from './features/authentication/context
 
 const router = createBrowserRouter([
   {
+    //to wrap all pages
     element: <AuthenticationContextProvider/>,
 
     children: [
-      {
+  {
     path: "/",
     element: <Feed />,
   },

@@ -1,3 +1,4 @@
+console.log("VITE_API_URL from env:", import.meta.env.VITE_API_URL);
 import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { Loader } from "../../../components/Loader/Loader";
@@ -16,17 +17,22 @@ interface AuthenticationContextType{
 }
 
  const AuthenticationContext = createContext<AuthenticationContextType | null>(null);
+
+ //to access data on other pages
  export function useAuthentication()
  {
     return useContext(AuthenticationContext);
  }
-export function AuthenticationContextProvider()
-{
+
+ // and wrap all the pages in main
+export function AuthenticationContextProvider(){
+    //to protect user
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     //to change url evertime and redirect to new again after login call fetchuser() grab user location
     const location = useLocation();
 
+    //auth pages
     const isOnAuthPage = location.pathname === "/login" || location.pathname === "/signup" || location.pathname === "/request-password-reset";
 
     //login will make a post request to login end point using content type json
@@ -37,7 +43,7 @@ export function AuthenticationContextProvider()
         if(response.ok)//is it is ok 
         {
             const {token} = await response.json();//send toekn as response as a part of response
-            localStorage.setItem("token",token);//setting token in local stoergae for login
+            localStorage.setItem("token", token);//setting token in local stoergae for login
         }else //is not okay send error message
         {
             const {message} = await response.json();
@@ -65,7 +71,7 @@ export function AuthenticationContextProvider()
     const logout = async () => {
         localStorage.removeItem("token");
         setUser(null);
-    }
+    };
 
     //to get user when page load
     const fetchUser = async () => {
@@ -99,7 +105,7 @@ export function AuthenticationContextProvider()
         {
             return;
         }//if not user tehn and this will going to login
-        fetchUser()
+        fetchUser();
     },[user, location.pathname]//using user as depenedency and its location
     );
 
@@ -115,7 +121,7 @@ export function AuthenticationContextProvider()
     return <Navigate to="/login"/>
     }
 
-    //if user is and email verified and on auth page return to home page
+    //if user is and dont no email verified and on auth page return to home page
     if(user && user?.emailVerified && isOnAuthPage)
     {
         return <Navigate to="/"/>
@@ -127,7 +133,8 @@ export function AuthenticationContextProvider()
     {
         //if user not email verified return to verifiy otherwise dont
         user && !user.emailVerified ? <Navigate to="/verify-email"/> : null
-    }    <Outlet/>  
+    }    <Outlet //to render to pages
+    /> 
     </AuthenticationContext.Provider>
     );//user value to login signup logout
 

@@ -3,6 +3,12 @@
   --primary-color-dark: #A50021;
 }
 
+body {
+  background: black url('/Background_image.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #ff1a1a; /* neon red text */
+}
+
 * {
   margin: 0;
   padding: 0;
