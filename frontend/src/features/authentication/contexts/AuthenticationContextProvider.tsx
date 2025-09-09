@@ -31,7 +31,7 @@ export function AuthenticationContextProvider()
 
     //login will make a post request to login end point using content type json
     const login = async (email: string, password: string) => {
-        const response = await fetch(import.meta.env.VITE_API_URL + "api/v1/authentication/login",{method: "POST", headers: {
+        const response = await fetch(import.meta.env.VITE_API_URL + "/api/v1/authentication/login",{method: "POST", headers: {
             "Content-Type": "application/json",},
         body: JSON.stringify({email, password}),});
         if(response.ok)//is it is ok 
@@ -47,7 +47,7 @@ export function AuthenticationContextProvider()
 
     //signup will make a post request to signup end point using content type json
     const signup = async (email: string, password: string) => {
-        const response = await fetch(import.meta.env.VITE_API_URL + "api/v1/authentication/register",{method: "POST", headers: {
+        const response = await fetch(import.meta.env.VITE_API_URL + "/api/v1/authentication/register",{method: "POST", headers: {
             "Content-Type": "application/json",},
         body: JSON.stringify({email, password}),});
         if(response.ok)//if it is ok 
@@ -71,7 +71,7 @@ export function AuthenticationContextProvider()
     const fetchUser = async () => {
         try{
             //make url to end point that we built
-        const response = await fetch(import.meta.env.VITE_API_URL + "api/v1/authentication/user",{ headers: {
+        const response = await fetch(import.meta.env.VITE_API_URL + "/api/v1/authentication/user",{ headers: {
             //send token as part of barrier
             Authorization: `Bearer ${localStorage.getItem("token")}`,
         },});
