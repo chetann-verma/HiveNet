@@ -2,7 +2,10 @@ package com.hivenet.features.authentication.controller;
 
 
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.service.annotation.DeleteExchange;
 
 import com.hivenet.features.authentication.dto.AuthenticationRequestBody;
 import com.hivenet.features.authentication.dto.AuthenticationResponseBody;
@@ -31,6 +36,13 @@ public class AuthenticationController {
     @PostMapping("/login")
     public AuthenticationResponseBody loginPage(@Valid @RequestBody AuthenticationRequestBody loginRequestBody) {
         return authenticationUserService.login(loginRequestBody);
+    }
+    
+    @DeleteMapping("/delete")
+    public String deleteUser(@RequestAttribute("authenticatedUser") AuthenticationUser user)
+    {
+    	authenticationUserService.deleteUser(user.getId());
+    	return "User deleted successfully";
     }
 
     @PostMapping("/register")
@@ -66,4 +78,24 @@ public class AuthenticationController {
         authenticationUserService.resetPassword(email, newPassword, token);
         return "Password reset successfully.";
     }
+    
+    @PutMapping("/profile/{id}")
+    public AuthenticationUser updateUserProfile(
+    		@RequestAttribute("authenticatedUser") AuthenticationUser user,
+    		@PathVariable Long id,
+    		@RequestParam(required = false) String firstName,
+    		@RequestParam(required = false) String lastName,
+    		@RequestParam(required = false) String company,
+    		@RequestParam(required = false) String position,
+    		@RequestParam(required = false) String location
+    		)
+    {
+    	if(!user.getId().equals(id))
+    	{
+    		throw new ResponseStatusException(HttpStatus.FORBIDDEN,"User does not have permission to update profile");
+    	}
+    	
+    	return authenticationUserService.updateUserProfile(id, firstName, lastName, company, position, location);
+    }
+    
 }

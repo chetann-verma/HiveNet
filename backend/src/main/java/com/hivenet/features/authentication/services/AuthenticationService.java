@@ -105,7 +105,7 @@ public class AuthenticationService {
 
         String subject = "Email Verification";
         String body = String.format("""
-                        Only one step to take full advantage of LinkedIn.
+                        Only one step to take full advantage of Hivenet.
                         
                         Enter this code to verify your email: %s. The code will expire in %s minutes.""",
                 emailVerificationToken, durationInMinutes); // Include the token in the message body
@@ -160,4 +160,21 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Password reset token failed.");
         }
     }
+
+	public AuthenticationUser updateUserProfile(Long userId, String firstName, String lastName, String company,
+			String position, String location) {
+		
+		AuthenticationUser user = authenticationUserRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"));
+		if(firstName!=null) user.setFirstName(firstName);
+		if(lastName!=null) user.setLastName(lastName);
+		if(company!=null) user.setCompany(company);
+		if(position!=null) user.setPosition(position);
+		if(location!=null) user.setLocation(location);
+		return authenticationUserRepository.save(user);
+	}
+
+	public void deleteUser(Long id) {
+	 
+		authenticationUserRepository.deleteById(id);
+	}
 }

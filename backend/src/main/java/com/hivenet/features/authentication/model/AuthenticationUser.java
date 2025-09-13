@@ -1,11 +1,14 @@
 package com.hivenet.features.authentication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hivenet.features.feed.model.Post;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "users")
 public class AuthenticationUser {
@@ -23,12 +26,81 @@ public class AuthenticationUser {
     private String password;
     private String passwordResetToken = null;
     private LocalDateTime passwordResetTokenExpiryDate = null;
-
+    private String firstName=null;
+    private String lastName=null;
+    private String company=null;
+    private String position=null;
+    private String location=null;
+    private boolean profileComplete=false; // to check the profile is completed or not
+    
+    @JsonIgnore
+    @OneToMany( mappedBy = "author" ,cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Post> posts;// cascadeType.ALL is used to delete all posts of user if we delete user... orphanRemoval is used to delete all unlink posts 
+    
+    
     public AuthenticationUser(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    
+    
+    public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+		updateProfileComplitionStatus(); // check completion status 
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+		updateProfileComplitionStatus(); // check completion status 
+	}
+
+	public String getCompany() {
+		return company;
+	}
+	
+
+	public boolean isProfileComplete() {
+		return profileComplete;
+	}
+
+
+	public void setCompany(String company) {
+		this.company = company;
+		updateProfileComplitionStatus(); // check completion status 
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+		updateProfileComplitionStatus(); // check completion status 
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+		updateProfileComplitionStatus(); // check completion status 
+	}
+	
+	public void setProfileComplete(boolean profileComplete) {
+		this.profileComplete = profileComplete;
+	}
+    
+    
     public AuthenticationUser() {
     }
 
@@ -43,6 +115,11 @@ public class AuthenticationUser {
     public String getEmail() {
         return email;
     }
+    
+     private void updateProfileComplitionStatus() // checks the completion status.. call on setters of every vars
+     {
+    	 this.profileComplete = (this.firstName!=null && this.lastName!=null && this.company!=null && this.position!=null && this.location!=null);
+     }
 
     public String getEmailVerificationToken() {
         return emailVerificationToken;
@@ -83,4 +160,22 @@ public class AuthenticationUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public Long getId() {
+		// TODO Auto-generated method stub
+		return id;
+	}
+
+
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
+	}
+	
 }
