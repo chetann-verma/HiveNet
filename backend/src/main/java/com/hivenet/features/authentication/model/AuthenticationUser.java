@@ -32,6 +32,7 @@ public class AuthenticationUser {
     private String position=null;
     private String location=null;
     private boolean profileComplete=false; // to check the profile is completed or not
+    private String profilePicture=null;
     
     @JsonIgnore
     @OneToMany( mappedBy = "author" ,cascade = CascadeType.ALL , orphanRemoval = true)
@@ -176,6 +177,18 @@ public class AuthenticationUser {
 
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
+	}
+
+
+
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+
+
+
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 	
 }

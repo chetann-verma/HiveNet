@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.hivenet.features.authentication.model.AuthenticationUser;
 import com.hivenet.features.authentication.repository.AuthenticationUserRepository;
 import com.hivenet.features.feed.dto.PostDto;
+import com.hivenet.features.feed.model.Comment;
 import com.hivenet.features.feed.model.Post;
+import com.hivenet.features.feed.repository.CommentRepository;
 import com.hivenet.features.feed.repository.PostRepository;
 
 @Service
@@ -17,11 +19,13 @@ public class FeedService {
 	@Autowired
 	private final PostRepository postRepository;
 	private final AuthenticationUserRepository userRepository;
+	private final CommentRepository commentRepository;
 	
-	public FeedService(PostRepository postRepository, AuthenticationUserRepository userRepository) {
+	public FeedService(PostRepository postRepository, AuthenticationUserRepository userRepository, CommentRepository commentRepository ) {
 		super();
 		this.postRepository = postRepository;
 		this.userRepository = userRepository;
+		this.commentRepository = null;
 	}
 
 
@@ -40,9 +44,9 @@ public class FeedService {
 	public Post editPost(Long postId, Long userId, PostDto postDto) {
 		
 		Post post = postRepository.findById(postId).orElseThrow(()->new IllegalArgumentException("Post not found"));
-		AuthenticationUser author = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
+		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
 		
-		if(!post.getAuthor().equals(author))
+		if(!post.getAuthor().equals(user))
 		{
 			throw new IllegalArgumentException("User is not the author of this post");
 		}
@@ -75,9 +79,9 @@ public class FeedService {
 	public void deletePost(Long postId, Long userId) {
 		
 		Post post = postRepository.findById(postId).orElseThrow(()->new IllegalArgumentException("Post not found"));
-		AuthenticationUser author = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
+		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
 		
-		if(!post.getAuthor().equals(author))
+		if(!post.getAuthor().equals(user))
 		{
 			throw new IllegalArgumentException("Post belongs to someone else !!");
 		}
@@ -88,6 +92,58 @@ public class FeedService {
 	public List<Post> getPostsByUserId(Long userId) {
 		// TODO Auto-generated method stub
 		return postRepository.findByAuthorId(userId);
+	}
+
+
+	public Post likePost(Long postId, Long userId) {
+		
+		Post post = postRepository.findById(postId).orElseThrow(()->new IllegalArgumentException("Post not found"));
+		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
+		
+		if(post.getLikes().contains(user))
+		{
+			post.getLikes().remove(user);
+		}
+		else
+		{
+			post.getLikes().add(user);
+		}
+		return postRepository.save(post);
+
+}
+
+
+	public Comment addComment(Long postId, Long userId, String content) {
+		
+		Post post = postRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("Post not found"));
+		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
+		Comment comment = new Comment(post, user, content);
+		return commentRepository.save(comment);
+	}
+	
+	public Comment editComment(Long commentId, Long userId, String newContent) {
+		Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("Comment not found"));
+		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
+		if(!comment.getAuthor().equals(user))
+		{
+			throw new IllegalArgumentException("User is not author of comment");
+		}
+		comment.setContent(newContent);
+		return commentRepository.save(comment);
 	} 
+	
+
+	public void deleteComment(Long commentId, Long userId) {
+		Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("Comment not found"));
+		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
+		if(!comment.getAuthor().equals(user))
+		{
+			throw new IllegalArgumentException("User is not author of comment");
+		}
+		commentRepository.delete(comment);
+		
+	}
+
+
 
 }

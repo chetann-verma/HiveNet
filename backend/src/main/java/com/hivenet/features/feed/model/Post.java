@@ -1,6 +1,8 @@
 package com.hivenet.features.feed.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
@@ -8,12 +10,16 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.hivenet.features.authentication.model.AuthenticationUser;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PreUpdate;
 
 @Entity(name = "posts")
@@ -34,6 +40,21 @@ public class Post {
 	private LocalDateTime creationDate;
 	
 	private LocalDateTime updatedDate;
+	
+	@OneToMany(
+			mappedBy = "post",
+			cascade = CascadeType.ALL , orphanRemoval = true
+			)
+	private List<Comment> comments;
+	
+	
+	@ManyToMany
+	@JoinTable(
+			name = "posts_likes",
+			joinColumns = @JoinColumn(name="post_id"),
+			inverseJoinColumns = @JoinColumn(name= "user_id")
+			)
+	private Set<AuthenticationUser> likes;
 	
 	@PreUpdate
 	public void preUpdate()
@@ -101,6 +122,16 @@ public class Post {
 
 	public void setUpdatedDate(LocalDateTime updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+
+
+	public Set<AuthenticationUser> getLikes() {
+		return likes;
+	}
+
+
+	public void setLikes(Set<AuthenticationUser> likes) {
+		this.likes = likes;
 	}
 
 	

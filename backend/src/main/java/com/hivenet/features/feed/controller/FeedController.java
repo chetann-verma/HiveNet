@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.hivenet.features.authentication.model.AuthenticationUser;
+import com.hivenet.features.feed.dto.CommentDto;
 import com.hivenet.features.feed.dto.PostDto;
+import com.hivenet.features.feed.model.Comment;
 import com.hivenet.features.feed.model.Post;
 import com.hivenet.features.feed.service.FeedService;
 
@@ -85,4 +87,35 @@ public class FeedController {
 		List<Post> posts = feedService.getPostsByUserId(userId);
 		return ResponseEntity.ok(posts);
 	}
+	
+	@PutMapping("/posts/{postId}/like")
+	public ResponseEntity<Post> likePost(@PathVariable Long postId, @RequestAttribute("authenticatedUser") AuthenticationUser user  )
+	{
+		Post post = feedService.likePost(postId , user.getId());
+		return ResponseEntity.ok(post);
+	}
+	
+	@PostMapping("/posts/{postId}/comments")
+	public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody CommentDto commentDto, @RequestAttribute("authenticatedUser") AuthenticationUser user)
+	{
+		Comment comment = feedService.addComment(postId, user.getId(), commentDto.getContent());
+		return ResponseEntity.ok(comment);
+	}
+	
+	@PutMapping("/comments/{commentId}")
+	public ResponseEntity<Comment> editComment(@PathVariable Long commentId,@RequestBody CommentDto commentDto, @RequestAttribute("authenticatedUser") AuthenticationUser user)
+	{
+		Comment comment = feedService.editComment(commentId, user.getId(), commentDto.getContent());
+		return ResponseEntity.ok(comment);
+	}
+	
+	@DeleteMapping("/comments/{commentId}")
+	public ResponseEntity<Comment> deleteComment(@PathVariable Long commentId, @RequestAttribute("authenticatedUser") AuthenticationUser user)
+	{
+		feedService.deleteComment(commentId, user.getId());
+		return ResponseEntity.noContent().build();
+	}
+	
+
+	
 }
