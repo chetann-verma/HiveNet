@@ -1,12 +1,11 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Box } from "../../components/Box/Box";
-import { Button } from "../../components/Button/Button";
-import { Input } from "../../components/Input/Input";
-import { Layout } from "../../components/Layout/Layout";
+import { Input } from "../../../../components/Input/Input";
 import classes from './Login.module.scss';
 import { Separator } from "../../components/Separator/Separator";
 import { useState, type FormEvent } from "react";
 import { useAuthentication } from "../../contexts/AuthenticationContextProvider";
+import { Button } from "../../../../components/Button/Button";
 
 export function Login()
 {
@@ -49,7 +48,7 @@ export function Login()
         }
     };
 
-    return( <Layout className={classes.root}>
+    return( <div className={classes.root}>
         <Box>
             <h1>Login</h1>
             <h2>The ultimate hub for all things tech</h2>
@@ -67,12 +66,12 @@ export function Login()
                         isLoading ? "..." : "Login"
                     }
                 </Button>
-                <Link to="/request-password-reset">Forgot password?</Link>
+                <Link to="/authentication/request-password-reset">Forgot password?</Link>
             </form>
             <Separator>Or</Separator>
             <div className={classes.register}>
-                New to HiveNet? <Link to="/signup">join now</Link>
+                New to HiveNet? <Link to="/authentication/signup">join now</Link>
             </div>
-            </Box></Layout>
+        </Box></div>
             );
 }

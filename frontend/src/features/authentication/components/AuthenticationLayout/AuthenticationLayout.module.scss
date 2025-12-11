@@ -2,13 +2,12 @@
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
-    color: white;
 
     .container{
         max-width: 84rem;
         width: 100%;
         margin: 0 auto;
-        // padding: 2rem;
+        padding: 2rem;
     }
 
     h1{
@@ -25,15 +24,19 @@
     
 
     .logo{
-        width: 17rem;
-        height: 10rem;
+        width: 10rem;
+        height: 6rem;
 //    filter: drop-shadow(0 0 1px #440303) 
 //          drop-shadow(0 0 1px #510303)
      }
 
     a{
         font-weight: bold;
-        color: var(--primary-color);
+        color: var(--web-text);
+
+        &:hover {
+     color: var(--dark-prim);
+  }
     }
 
     footer{
@@ -41,18 +44,18 @@
         background-color: rgb(0, 0, 0);
 
     a{
-        color: rgba(251, 250, 250, 0.6);
+        color: rgba(255, 255, 255, 0.6);
         font-weight: normal;
     }
 
     img{
-        width: 8rem;
+        width: 7rem;
     }
 
     ul {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 1.5rem;
       margin-top: 2rem;
       flex-wrap: wrap;
       padding: 0;

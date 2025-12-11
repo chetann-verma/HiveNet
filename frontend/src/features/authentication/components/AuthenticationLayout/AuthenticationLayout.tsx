@@ -1,20 +1,22 @@
-import classes from "./Layout.module.scss";
-import type { ReactNode } from "react";
+import { Outlet } from "react-router-dom";
+import classes from "./AuthenticationLayout.module.scss";
 
-export function Layout({children, className}: {children: ReactNode, className:string}) {  return (
-<div className={`${classes.root} ${className}`}><header className={classes.container}>
-    <a href="/">
-    <img src="/Logo.png" alt="" className={classes.logo}/>
-    </a>
-</header>
-<main className={classes.container}>
-    {children}
-</main>
-<footer>
-    <ul className={classes.container}>
-        <li>
-            <img src="/Footer_logo.png" alt=""/>
-             <span>© 2025</span>
+export function AuthenticationLayout() {
+  return (
+    <div className={classes.root}>
+      <header className={classes.container}>
+        <a href="/">
+          <img src="/Logo.png" alt="" className={classes.logo} />
+        </a>
+      </header>
+      <main className={classes.container}>
+        <Outlet />
+      </main>
+      <footer>
+        <ul className={classes.container}>
+          <li>
+            <img src="/Logo.png" alt="" />
+            <span>© 2024</span>
           </li>
           <li>
             <a href="">Accessiblity</a>
@@ -43,5 +45,8 @@ export function Layout({children, className}: {children: ReactNode, className:st
           <li>
             <a href="">Language</a>
           </li>
-    </ul></footer></div>);
+        </ul>
+      </footer>
+    </div>
+  );
 }

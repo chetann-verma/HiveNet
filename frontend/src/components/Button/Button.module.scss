@@ -1,0 +1,56 @@
+.root{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    background-color: var(--web-text);
+    color: var(--dark-prim);
+    border: 1px solid var(--dark-prim);
+    border-radius: 9999px;
+    margin-block: 1rem;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.large{
+        padding: 1rem;
+    }
+
+    &.medium{
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    &.small{
+        padding: 0.2rem;
+        font-size: 0.8rem;
+    }
+
+  &:hover {
+     border: 2.5px solid var(--nav-text);
+  }
+
+    &:disabled{
+        color: var(--web-text);
+        background-color: black;
+        cursor: not-allowed;
+    }
+
+    &:not(:disabled, .outline):hover{
+        background-color: black;
+        color: var(--web-text);
+    }
+
+    &:outline{
+        background-color: black;
+        color: var(--nav-text);
+        border: 1px solid var(--dark-prim);
+        font-weight: normal;
+
+        &:not(:disabled):hover{
+            border-color: white;
+        }
+    }
+}

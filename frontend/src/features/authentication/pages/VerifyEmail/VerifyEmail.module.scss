@@ -1,9 +1,9 @@
 .root {
   /* This affects the whole VerifyEmail page background */
   min-height: 100vh;
-  background: #0a0a0a;
-  background: radial-gradient(circle at top, #1a1a1a, #000);
-  color: #fff;
+  background: var(--primary-color);
+  // background: radial-gradient(circle at top, #1a1a1a, #000);
+   color: var(--web-text);
   font-family: 'Inter', sans-serif;
 }
 
@@ -18,8 +18,8 @@
 
 .card {
   background: rgba(20, 20, 20, 0.85);
-  border: 1px solid rgba(255, 0, 0, 0.6);
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 40px rgba(255, 0, 0, 0.4);
+  border: 1px solid rgba(86, 180, 245, 0.6);
+  box-shadow: 0 0 20px rgba(86, 180, 245, 0.6), 0 0 40px rgba(86, 180, 245, 0.4);
   border-radius: 16px;
   padding: 2rem;
   width: 100%;
@@ -30,8 +30,8 @@
   h1 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    color: #ff2e2e;
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    color: var(--nav-text);
+    text-shadow: 0 0 10px rgba(86, 180, 245, 0.8);
   }
 }
 
@@ -46,33 +46,33 @@
 }
 
 .primary {
-  background: #ff2e2e;
+  background: var(--primary-color);
   color: #fff;
   border: none;
   padding: 0.75rem;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+  box-shadow: 0 0 12px rgba(86, 180, 245, 0.8);
   transition: all 0.3s ease;
 
   &:hover {
-    background: #e02020;
+    background: var(--nav-text);
     transform: translateY(-2px);
-    box-shadow: 0 0 18px rgba(255, 0, 0, 1);
+    box-shadow: 0 0 18px rgba(86, 180, 245, 1);
   }
 }
 
 .secondary {
   background: transparent;
-  border: 1px solid rgba(255, 0, 0, 0.6);
-  color: #ff2e2e;
+  border: 1px solid rgba(86, 180, 245, 0.6);
+  color: var(--web-text);
   padding: 0.75rem;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    background: rgba(255, 0, 0, 0.1);
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+    background: rgba(86, 180, 245, 0.1);
+    box-shadow: 0 0 10px rgba(86, 180, 245, 0.7);
   }
 }

@@ -25,7 +25,7 @@ public class FeedService {
 		super();
 		this.postRepository = postRepository;
 		this.userRepository = userRepository;
-		this.commentRepository = null;
+		this.commentRepository = commentRepository;
 	}
 
 

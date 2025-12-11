@@ -1,0 +1,48 @@
+.root {
+  background-color: var(--box-color);
+  border-radius: 0.3rem;
+  border: 2px solid var(--dark-prim);
+  padding: 1rem;
+  color: var(--web-text);
+
+  h3 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .items {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .item {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+
+    button {
+      flex-shrink: 0;
+    }
+
+    .avatar {
+      width: 3.5rem;
+      height: 3.5rem;
+      border: 2px solid var(--nav-text);
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .name {
+      font-weight: bold;
+    }
+
+    button {
+      text-align: left;
+    }
+
+    .button {
+      width: auto;
+      margin: 0.3rem 0 0;
+    }
+  }
+}

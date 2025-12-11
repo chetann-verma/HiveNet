@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Box } from "../../components/Box/Box";
-import { Button } from "../../components/Button/Button";
-import { Input } from "../../components/Input/Input";
-import { Layout } from "../../components/Layout/Layout";
+import { Button } from "../../../../components/Button/Button";
+import { Input } from "../../../../components/Input/Input";
+import { AuthenticationLayout } from "../../components/AuthenticationLayout/AuthenticationLayout";
 import classes from './Signup.module.scss';
 import { Separator } from "../../components/Separator/Separator";
 import { useState, type FormEvent } from "react";
@@ -44,7 +44,7 @@ export function Signup()
             }
         };
 
-    return( <Layout className={classes.root}>
+    return( <div className={classes.root}>
         <Box>
             <h1>Sign up</h1>
             <h2>The Future is Connected. Join Hivenet.</h2>
@@ -61,8 +61,8 @@ export function Signup()
             </form>
             <Separator>Or</Separator>
             <div className={classes.register}>
-                Already on HiveNet? <Link to="/login">Sign in</Link>
+                Already on HiveNet? <Link to="/authentication/login">Sign in</Link>
             </div>
-            </Box></Layout>
+            </Box></div>
             );
 }

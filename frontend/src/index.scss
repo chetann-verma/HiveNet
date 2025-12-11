@@ -1,12 +1,17 @@
 :root {
-  --primary-color: #C40234;
-  --primary-color-dark: #A50021;
+  --primary-color:#1F222B;
+  --dark-prim: #181b22;
+  --bg-color: #56575C;
+  --web-text: #FEFFFE;
+  --nav-text: #56B4F5;
+  --box-color: #2F3035;
+  --hover-col: #D9D5F2;
+  --active-col: #FEFFFE;
 }
 
 body {
-  background: black url('/Background_image.png') no-repeat center center fixed;
-  background-size: cover;
-  color: #ff1a1a; /* neon red text */
+  background: var(--primary-color);
+  color: var(--web-text); 
 }
 
 * {
@@ -18,8 +23,8 @@ body {
 }
 
 html {
-  font-family: Poppins, sans-serif;
-  background-color: #f4f2ee;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
   overflow-x: hidden;
 }
 

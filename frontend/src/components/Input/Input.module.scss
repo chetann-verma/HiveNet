@@ -1,0 +1,38 @@
+.root {
+    display: grid;
+    gap: 0.5rem;
+    margin-block: 1rem;
+
+    input {
+        background: var(--box-color);
+        box-shadow: 0 0 .4vw rgba(0, 0, 0, 0.5), 0 0 0 .15vw transparent;
+        width: 100%;
+        border: 1.5px solid var(--nav-text);
+        border-radius: 4px;
+        color: var(--web-text);
+        font-size: .9vw;
+        transition: .4s;
+
+        &:hover {
+            box-shadow: 0 0 0 .15vw var(--box-color);
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 .15vw var(--dark-prim);
+        }
+    }
+
+    &.large input{
+        padding: 1rem;
+    }
+
+    &.medium input{
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    &.small input{
+        padding: 0.2rem;
+        font-size: 0.8rem;
+    }
+}
