@@ -1,31 +1,35 @@
-import { useNavigate } from 'react-router-dom';
-import { useAuthentication, type User } from '../../../authentication/contexts/AuthenticationContextProvider';
-import classes from './Comment.module.scss';
-import { useState } from 'react';
-import { Input } from '../../../../components/Input/Input';
-import { timeAgo } from '../../utils/date';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Input } from "../../../../components/Input/Input";
+import {
+  useAuthentication,
+  type User,
+} from "../../../authentication/contexts/AuthenticationContextProvider";
+
+import { TimeAgo } from "../TimeAgo/TimeAgo";
+import classes from "./Comment.module.scss";
 
 export interface Comment {
     id: number;
-    content: string;
-    author: User;
-    creationDate: string;
-    updatedDate?: string;
+  content: string;
+  author: User;
+  creationDate: string;
+  updatedDate?: string;
 }
 
 interface CommentProps {
-    comment: Comment;
-    deleteComment: (commentId: number) => Promise<void>;
-    editComment: (commentId: number, content: string) => Promise<void>;
+  comment: Comment;
+  deleteComment: (commentId: number) => Promise<void>;
+  editComment: (commentId: number, content: string) => Promise<void>;
 }
 
 export function Comment({ comment, deleteComment, editComment }: CommentProps) {
-    const navigate = useNavigate();
-    const [showActions, setShowActions] = useState(false);
-    const [editing, setEditing] = useState(false);
-    const [commentContent, setCommentContent] = useState(comment.content);
-    const { user } = useAuthentication();
-    return (
+  const navigate = useNavigate();
+  const [showActions, setShowActions] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [commentContent, setCommentContent] = useState(comment.content);
+  const { user } = useAuthentication();
+  return (
     <div key={comment.id} className={classes.root}>
       {!editing ? (
         <>
@@ -48,10 +52,7 @@ export function Comment({ comment, deleteComment, editComment }: CommentProps) {
                 <div className={classes.title}>
                   {comment.author.position + " at " + comment.author.company}
                 </div>
-                <div className={classes.date}>
-                    {timeAgo(new Date(comment.updatedDate || comment.creationDate))}
-                    {comment.updatedDate ? " . Edited " : ""}
-                </div>
+                <TimeAgo date={comment.creationDate} edited={!comment.updatedDate} />
               </div>
             </button>
             {comment.author.id == user?.id && (

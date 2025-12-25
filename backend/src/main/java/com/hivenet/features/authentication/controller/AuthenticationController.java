@@ -1,7 +1,4 @@
 package com.hivenet.features.authentication.controller;
-
-
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.service.annotation.DeleteExchange;
-
+import com.hivenet.dto.Response;
 import com.hivenet.features.authentication.dto.AuthenticationRequestBody;
 import com.hivenet.features.authentication.dto.AuthenticationResponseBody;
 import com.hivenet.features.authentication.model.AuthenticationUser;
@@ -39,10 +36,10 @@ public class AuthenticationController {
     }
     
     @DeleteMapping("/delete")
-    public String deleteUser(@RequestAttribute("authenticatedUser") AuthenticationUser user)
+    public Response deleteUser(@RequestAttribute("authenticatedUser") AuthenticationUser user)
     {
     	authenticationUserService.deleteUser(user.getId());
-    	return "User deleted successfully";
+    	return new Response("User deleted successfully.");
     }
 
     @PostMapping("/register")
@@ -56,27 +53,27 @@ public class AuthenticationController {
     }
 
     @PutMapping("/validate-email-verification-token")
-    public String verifyEmail(@RequestParam String token, @RequestAttribute("authenticatedUser") AuthenticationUser user) {
+    public Response verifyEmail(@RequestParam String token, @RequestAttribute("authenticatedUser") AuthenticationUser user) {
         authenticationUserService.validateEmailVerificationToken(token, user.getEmail());
-        return "Email verified successfully.";
+        return new Response("Email verified successfully.");
     }
 
     @GetMapping("/send-email-verification-token")
-    public String sendEmailVerificationToken(@RequestAttribute("authenticatedUser") AuthenticationUser user) {
+    public Response sendEmailVerificationToken(@RequestAttribute("authenticatedUser") AuthenticationUser user) {
         authenticationUserService.sendEmailVerificationToken(user.getEmail());
-        return "Email verification token sent successfully.";
+        return new Response("Email verification token sent successfully.");
     }
 
     @PutMapping("/send-password-reset-token")
-    public String sendPasswordResetToken(@RequestParam String email) {
+    public Response sendPasswordResetToken(@RequestParam String email) {
         authenticationUserService.sendPasswordResetToken(email);
-        return "Password reset token sent successfully.";
+        return new Response("Password reset token sent successfully.");
     }
 
     @PutMapping("/reset-password")
-    public String resetPassword(@RequestParam String newPassword, @RequestParam String token, @RequestParam String email) {
+    public Response resetPassword(@RequestParam String newPassword, @RequestParam String token, @RequestParam String email) {
         authenticationUserService.resetPassword(email, newPassword, token);
-        return "Password reset successfully.";
+        return new Response("Password reset successfully.");
     }
     
     @PutMapping("/profile/{id}")

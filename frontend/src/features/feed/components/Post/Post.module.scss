@@ -36,11 +36,6 @@
             align-items: center;
         }
 
-        .date {
-            color: var(--web-text);
-            font-size: 0.8rem;
-        }
-
         button.toggle {
             background-color: transparent;
             width: 1.5rem;
@@ -83,17 +78,14 @@
          svg
       {
         height: 1.5rem;
-        width: 1.5rem;
-        
+        width: 1.5rem;        
 
         &:hover,
             &.active {
                 background-color: var(--dark-prim);
                 border: 1px solid var(--web-text);
             }
-
       }
-
         button {
             width: 100%;
             text-align: left;
@@ -103,7 +95,6 @@
             padding-bottom: 0.3rem;
         }
     }
-
     .content {
         padding: 0 1rem 1rem;
 
@@ -158,8 +149,11 @@
             &.active {
                 svg{
                     fill: var(--nav-text);
-                }
-                
+                }                
+            }
+
+            &[disbled] {
+                cursor: wait;
             }
         }
     }

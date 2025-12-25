@@ -1,6 +1,7 @@
 package com.hivenet.features.feed.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -142,6 +143,17 @@ public class FeedService {
 		}
 		commentRepository.delete(comment);
 		
+	}
+
+
+	public List<Comment> getPostComments(Long postId) {
+		Post post = postRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("Post not found"));
+		return post.getComments();
+	}
+	
+	public Set<AuthenticationUser> getPostLikes(Long postId) {
+		Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
+		return post.getLikes();
 	}
 
 

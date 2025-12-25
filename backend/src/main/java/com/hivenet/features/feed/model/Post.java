@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hivenet.features.authentication.model.AuthenticationUser;
 
 import jakarta.persistence.CascadeType;
@@ -41,13 +42,14 @@ public class Post {
 	
 	private LocalDateTime updatedDate;
 	
+	@JsonIgnore
 	@OneToMany(
 			mappedBy = "post",
 			cascade = CascadeType.ALL , orphanRemoval = true
 			)
 	private List<Comment> comments;
 	
-	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
 			name = "posts_likes",
@@ -133,6 +135,18 @@ public class Post {
 	public void setLikes(Set<AuthenticationUser> likes) {
 		this.likes = likes;
 	}
+
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+
 
 	
 	

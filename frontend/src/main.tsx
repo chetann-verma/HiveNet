@@ -5,7 +5,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { Login } from './features/authentication/pages/Login/Login';
 import { Signup } from './features/authentication/pages/Signup/Signup';
-import { Resetpassword } from './features/authentication/pages/ResetPassword/Resetpassword';
+import { ResetPassword } from './features/authentication/pages/ResetPassword/Resetpassword';
 import { VerifyEmail } from './features/authentication/pages/VerifyEmail/VerifyEmail';
 ;
 import { AuthenticationContextProvider } from './features/authentication/contexts/AuthenticationContextProvider';
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
   },
   {
     path: "request-password-reset",
-    element: <Resetpassword/>,
+    element: <ResetPassword/>,
   },
   {
     path: "verify-email",

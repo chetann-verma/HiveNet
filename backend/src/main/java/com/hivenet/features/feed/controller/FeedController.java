@@ -1,6 +1,7 @@
 package com.hivenet.features.feed.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.hivenet.dto.Response;
 
 import com.hivenet.features.authentication.model.AuthenticationUser;
 import com.hivenet.features.feed.dto.CommentDto;
@@ -75,10 +76,10 @@ public class FeedController {
 	}
 	
 	@DeleteMapping("/posts/{postId}")
-	public ResponseEntity<Void> deletePost(@PathVariable Long postId ,@RequestAttribute("authenticatedUser") AuthenticationUser user )
+	public ResponseEntity<Response> deletePost(@PathVariable Long postId ,@RequestAttribute("authenticatedUser") AuthenticationUser user )
 	{
 		feedService.deletePost(postId, user.getId());
-		return ResponseEntity.noContent().build();
+		 return ResponseEntity.ok(new Response("Post deleted successfully."));
 	}
 	
 	@GetMapping("/posts/user/{userId}")
@@ -95,11 +96,26 @@ public class FeedController {
 		return ResponseEntity.ok(post);
 	}
 	
+	@GetMapping("/posts/{postId}/like")
+	public ResponseEntity<Set<AuthenticationUser>> getPostLikes(@PathVariable Long postId) {
+        Set<AuthenticationUser> likes = feedService.getPostLikes(postId);
+        return ResponseEntity.ok(likes);
+    }
+	
+	
 	@PostMapping("/posts/{postId}/comments")
 	public ResponseEntity<Comment> addComment(@PathVariable Long postId,@RequestBody CommentDto commentDto, @RequestAttribute("authenticatedUser") AuthenticationUser user)
 	{
 		Comment comment = feedService.addComment(postId, user.getId(), commentDto.getContent());
 		return ResponseEntity.ok(comment);
+	}
+	
+	@GetMapping("/posts/{postId}/comments")
+	public ResponseEntity<List<Comment>> getComments(@PathVariable Long postId)
+	{
+		List<Comment> comments = feedService.getPostComments(postId);
+		return ResponseEntity.ok(comments);
+		
 	}
 	
 	@PutMapping("/comments/{commentId}")
@@ -110,11 +126,10 @@ public class FeedController {
 	}
 	
 	@DeleteMapping("/comments/{commentId}")
-	public ResponseEntity<Comment> deleteComment(@PathVariable Long commentId, @RequestAttribute("authenticatedUser") AuthenticationUser user)
-	{
-		feedService.deleteComment(commentId, user.getId());
-		return ResponseEntity.noContent().build();
-	}
+	public ResponseEntity<Response> deleteComment(@PathVariable Long commentId, @RequestAttribute("authenticatedUser") AuthenticationUser user) {
+        feedService.deleteComment(commentId, user.getId());
+        return ResponseEntity.ok(new Response("Comment deleted successfully."));
+    }
 	
 
 	
