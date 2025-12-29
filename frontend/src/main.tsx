@@ -13,6 +13,8 @@ import { AuthenticationLayout } from './features/authentication/components/Authe
 import { ApplicationLayout } from './components/ApplicationLayout/ApplicationLayout';
 import { Feed } from './features/feed/pages/Feed/Feed';
 import { Profile } from './features/authentication/pages/Profile/Profile';
+import { Notifications } from './features/feed/pages/Notifications/Notifications';
+import { PostPage } from './features/feed/pages/Post/Post';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,10 @@ const router = createBrowserRouter([
             element: <Feed/>,
           },
           {
+            path: "posts/:id",
+            element: <PostPage/>,
+          },
+          {
             path: "network",
             element: <div>Network</div>,
           },
@@ -42,7 +48,7 @@ const router = createBrowserRouter([
           },
           {
             path: "notifications",
-            element: <div>Notifications</div>,
+            element: <Notifications/>,
           },
           {
             path: "profile/:id",

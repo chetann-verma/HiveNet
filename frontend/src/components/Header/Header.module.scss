@@ -7,6 +7,24 @@
     z-index: 100;
     color: var(--nav-text);
     // padding: 0.8rem;
+
+    .notifications {
+    position: relative;
+
+     .badge {
+      position: absolute;
+      top: -0.5rem;
+      left: 0.5rem;
+      background-color: crimson;
+      color: white;
+      border-radius: 50%;
+      font-size: 0.6rem;
+      width: 1rem;
+      height: 1rem;
+      display: grid;
+      place-items: center;
+    }
+  }
     
     .container {
         max-width: 74rem;
@@ -16,7 +34,7 @@
         display: grid;
         grid-template-columns: 1fr auto;
         position: relative;
-        gap: 2rem;
+        gap: 1rem;
     }
 
     img {
@@ -34,7 +52,7 @@
     .right {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 2rem;
     }
 
     svg {
@@ -61,6 +79,10 @@
         width: min(18rem, 100%);
         display: grid;
         gap: 0.5rem;
+
+        .right {
+      gap: 2rem;
+        }
     }
 
     a {

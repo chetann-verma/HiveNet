@@ -2,6 +2,7 @@ package com.hivenet.features.authentication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hivenet.features.feed.model.Post;
+import com.hivenet.features.notifications.model.Notification;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -33,6 +34,15 @@ public class AuthenticationUser {
     private String location=null;
     private boolean profileComplete=false; // to check the profile is completed or not
     private String profilePicture=null;
+    
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "recipient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> receivedNotifications; // agar user delete hota hai to uske saare noti DB se delete ho jayenge 
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Notification> actedNotifications; // or same hai ye.. jaha user author hoga 
     
     @JsonIgnore
     @OneToMany( mappedBy = "author" ,cascade = CascadeType.ALL , orphanRemoval = true)
@@ -190,5 +200,31 @@ public class AuthenticationUser {
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
 	}
+
+
+
+	public List<Notification> getReceivedNotifications() {
+		return receivedNotifications;
+	}
+
+
+
+	public void setReceivedNotifications(List<Notification> receivedNotifications) {
+		this.receivedNotifications = receivedNotifications;
+	}
+
+
+
+	public List<Notification> getActedNotifications() {
+		return actedNotifications;
+	}
+
+
+
+	public void setActedNotifications(List<Notification> actedNotifications) {
+		this.actedNotifications = actedNotifications;
+	}
+	
+	
 	
 }

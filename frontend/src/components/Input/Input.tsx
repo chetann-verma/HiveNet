@@ -1,6 +1,6 @@
 import type { InputHTMLAttributes } from 'react';
 import classes from './Input.module.scss'
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, "size"> & {
     label?: string;
     //size property for differnet sizes
     size?: "small" | "medium" | "large"

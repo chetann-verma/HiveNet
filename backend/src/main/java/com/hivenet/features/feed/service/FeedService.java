@@ -13,6 +13,7 @@ import com.hivenet.features.feed.model.Comment;
 import com.hivenet.features.feed.model.Post;
 import com.hivenet.features.feed.repository.CommentRepository;
 import com.hivenet.features.feed.repository.PostRepository;
+import com.hivenet.features.notifications.service.NotificationService;
 
 @Service
 public class FeedService {
@@ -21,12 +22,14 @@ public class FeedService {
 	private final PostRepository postRepository;
 	private final AuthenticationUserRepository userRepository;
 	private final CommentRepository commentRepository;
+	private final NotificationService notificationService;
 	
-	public FeedService(PostRepository postRepository, AuthenticationUserRepository userRepository, CommentRepository commentRepository ) {
+	public FeedService(PostRepository postRepository, AuthenticationUserRepository userRepository, CommentRepository commentRepository, NotificationService notificationService ) {
 		super();
 		this.postRepository = postRepository;
 		this.userRepository = userRepository;
 		this.commentRepository = commentRepository;
+		this.notificationService = notificationService;
 	}
 
 
@@ -108,18 +111,23 @@ public class FeedService {
 		else
 		{
 			post.getLikes().add(user);
+			notificationService.sendLikeNotification(user, post.getAuthor(), post.getId()); // yaha se notification jayega through service (red badge)
 		}
-		return postRepository.save(post);
+		Post savedPost = postRepository.save(post);
+		notificationService.sendLikeToPost(postId, savedPost.getLikes()); // post update itself
+		return savedPost;
 
-}
+	}
 
 
 	public Comment addComment(Long postId, Long userId, String content) {
 		
 		Post post = postRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("Post not found"));
-		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));
-		Comment comment = new Comment(post, user, content);
-		return commentRepository.save(comment);
+		AuthenticationUser user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("User not found"));	
+		Comment comment = commentRepository.save(new Comment(post, user, content));
+		notificationService.sendCommentNotification(user, comment.getAuthor(), post.getId());// user ko notification jayega red badge 
+		notificationService.sendCommentToPost(postId, comment);// and here post update itself 
+		return comment;
 	}
 	
 	public Comment editComment(Long commentId, Long userId, String newContent) {
