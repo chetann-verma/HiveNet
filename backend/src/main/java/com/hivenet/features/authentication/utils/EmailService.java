@@ -1,34 +1,51 @@
 package com.hivenet.features.authentication.utils;
 
-import java.io.UnsupportedEncodingException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import java.util.Map;
 
+/**
+ * Sends transactional emails via Brevo REST API (HTTPS/443).
+ * Replaces JavaMailSender SMTP which is blocked on Render's free tier.
+ */
 @Service
 public class EmailService {
-	@Autowired
-	private final JavaMailSender mailSender;
 
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+    private static final Logger log = LoggerFactory.getLogger(EmailService.class);
+    private static final String BREVO_API_URL = "https://api.brevo.com/v3/smtp/email";
 
-    public void sendEmail(String email, String subject, String content) throws MessagingException, UnsupportedEncodingException {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
+    @Value("${brevo.api.key}")
+    private String brevoApiKey;
 
-        helper.setFrom("no-reply@hivenet.com", "HiveNet");
-        helper.setTo(email);
+    private final RestTemplate restTemplate = new RestTemplate();
 
-        helper.setSubject(subject);
-        helper.setText(content, true);
+    public void sendEmail(String toEmail, String subject, String content) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("api-key", brevoApiKey);
+            headers.set("accept", "application/json");
 
-        mailSender.send(message);
+            Map<String, Object> body = Map.of(
+                "sender",  Map.of("name", "HiveNet", "email", "no-reply@hivenet.com"),
+                "to",      new Object[]{Map.of("email", toEmail)},
+                "subject", subject,
+                "htmlContent", content
+            );
+
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+            restTemplate.postForEntity(BREVO_API_URL, request, String.class);
+            log.info("Email sent successfully to {}", toEmail);
+
+        } catch (Exception e) {
+            log.error("Failed to send email to {}: {}", toEmail, e.getMessage());
+        }
     }
 }
