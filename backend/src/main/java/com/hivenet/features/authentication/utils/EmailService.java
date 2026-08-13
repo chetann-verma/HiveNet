@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -24,6 +26,9 @@ public class EmailService {
     @Value("${brevo.api.key}")
     private String brevoApiKey;
 
+    @Value("${brevo.sender.email}")
+    private String senderEmail;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     public void sendEmail(String toEmail, String subject, String content) {
@@ -34,16 +39,18 @@ public class EmailService {
             headers.set("accept", "application/json");
 
             Map<String, Object> body = Map.of(
-                "sender",  Map.of("name", "HiveNet", "email", "no-reply@hivenet.com"),
-                "to",      new Object[]{Map.of("email", toEmail)},
-                "subject", subject,
+                "sender",      Map.of("name", "HiveNet", "email", senderEmail),
+                "to",          new Object[]{Map.of("email", toEmail)},
+                "subject",     subject,
                 "htmlContent", content
             );
 
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
-            restTemplate.postForEntity(BREVO_API_URL, request, String.class);
-            log.info("Email sent successfully to {}", toEmail);
+            ResponseEntity<String> response = restTemplate.postForEntity(BREVO_API_URL, request, String.class);
+            log.info("Email sent to {} — status: {}", toEmail, response.getStatusCode());
 
+        } catch (HttpClientErrorException e) {
+            log.error("Brevo API error sending to {}: {} — {}", toEmail, e.getStatusCode(), e.getResponseBodyAsString());
         } catch (Exception e) {
             log.error("Failed to send email to {}: {}", toEmail, e.getMessage());
         }
