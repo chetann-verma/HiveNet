@@ -1,5 +1,6 @@
 package com.hivenet.features.feed.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,9 +39,9 @@ public class FeedService {
 		AuthenticationUser author = userRepository.findById(authorId).orElseThrow(()-> new IllegalArgumentException("User not found"));
 	    Post post = new Post(postDto.getContent(), author);
 	   post.setPicture(postDto.getPicture());
+	   post.setLikes(new HashSet<>());
 	    return postRepository.save(post);
-	    		
-	    		
+
 	    		
 	}
 
@@ -138,7 +139,9 @@ public class FeedService {
 			throw new IllegalArgumentException("User is not author of comment");
 		}
 		comment.setContent(newContent);
-		return commentRepository.save(comment);
+		Comment savedComment = commentRepository.save(comment);
+        notificationService.sendCommentToPost(savedComment.getPost().getId(), savedComment);
+		return savedComment;
 	} 
 	
 
@@ -150,6 +153,7 @@ public class FeedService {
 			throw new IllegalArgumentException("User is not author of comment");
 		}
 		commentRepository.delete(comment);
+		notificationService.sendDeleteCommentToPost(comment.getPost().getId(), comment);
 		
 	}
 

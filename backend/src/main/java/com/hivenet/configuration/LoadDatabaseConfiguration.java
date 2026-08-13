@@ -7,6 +7,7 @@ import java.util.Random;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.hivenet.features.authentication.model.AuthenticationUser;
 import com.hivenet.features.authentication.repository.AuthenticationUserRepository;
@@ -15,6 +16,7 @@ import com.hivenet.features.feed.model.Post;
 import com.hivenet.features.feed.repository.PostRepository;
 
 @Configuration
+@Profile("!prod") // Disable seed data in production
 public class LoadDatabaseConfiguration {
     private final Encoder encoder;
 

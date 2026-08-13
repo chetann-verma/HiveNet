@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Box } from "../../components/Box/Box";
 import { Button } from "../../../../components/Button/Button";
 import { Input } from "../../../../components/Input/Input";
-import { AuthenticationLayout } from "../../components/AuthenticationLayout/AuthenticationLayout";
 import classes from './Signup.module.scss';
 import { Separator } from "../../components/Separator/Separator";
 import { useState, type FormEvent } from "react";
