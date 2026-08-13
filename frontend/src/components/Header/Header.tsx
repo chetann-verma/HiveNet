@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import classes from './Header.module.scss';
+import logoSrc from '../../assets/Logo.png';
 import { Input } from '../Input/Input';
 import { useAuthentication } from '../../features/authentication/contexts/AuthenticationContextProvider';
 import { useEffect, useState } from 'react';
@@ -67,7 +68,7 @@ export function Header() {
                 <div className={classes.left}>
                     {/* nav link to return to home page when click logo */}
                     <NavLink to="/">
-                        <img src="/Logo.png" alt="" />
+                        <img src={logoSrc} alt="HiveNet" />
 
                     </NavLink>
                     <Input placeholder="Search" size={"medium"} />
