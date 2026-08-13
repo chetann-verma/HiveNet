@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
 import classes from "./AuthenticationLayout.module.scss";
+import logoSrc from "../../../../assets/Logo.png";
 
 export function AuthenticationLayout() {
   return (
     <div className={classes.root}>
       <header className={classes.container}>
         <a href="/">
-          <img src="/Logo.png" alt="" className={classes.logo} />
+          <img src={logoSrc} alt="HiveNet" className={classes.logo} />
         </a>
       </header>
       <main className={classes.container}>
@@ -15,7 +16,7 @@ export function AuthenticationLayout() {
       <footer>
         <ul className={classes.container}>
           <li>
-            <img src="/Logo.png" alt="" />
+            <img src={logoSrc} alt="HiveNet" />
             <span>© 2024</span>
           </li>
           <li>

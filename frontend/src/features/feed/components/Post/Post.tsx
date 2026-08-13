@@ -11,6 +11,7 @@ import { Madal } from "../Modal/Modal";
 import { TimeAgo } from "../TimeAgo/TimeAgo";
 import classes from "./Post.module.scss";
 import { useWebSocket } from "../../../ws/Ws";
+import defaultAvatarSrc from "../../../../assets/me.jpeg";
 
 export interface Post {
   id: number;
@@ -231,7 +232,7 @@ export function Post({ post, setPosts }: PostProps) {
             >
               <img
                 className={classes.avatar}
-                src={post.author.profilePicture || "/me.jpeg"}
+                src={post.author.profilePicture || defaultAvatarSrc}
                 alt=""
               />
             </button>

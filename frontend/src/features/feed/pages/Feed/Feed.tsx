@@ -9,6 +9,7 @@ import { Madal } from "../../components/Modal/Modal.tsx";
 import { Post } from "../../components/Post/Post.tsx";
 import { RightSidebar } from "../../components/RightSidebar/RightSidebar.tsx";
 import classes from "./Feed.module.scss";
+import defaultAvatarSrc from "../../../../assets/me.jpeg";
 
 export function Feed() {
   usePageTitle("Feed");
@@ -54,7 +55,7 @@ export function Feed() {
           >
             <img
               className={`${classes.top} ${classes.avatar}`}
-              src={user?.profilePicture || "/me.jpeg"}
+              src={user?.profilePicture || defaultAvatarSrc}
               alt=""
             />
           </button>

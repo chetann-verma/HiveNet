@@ -4,6 +4,7 @@ import classes from './Profile.module.scss';
 import { useAuthentication } from '../../../features/authentication/contexts/AuthenticationContextProvider';
 import { Button } from '../../Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
+import defaultAvatarSrc from '../../../assets/me.jpeg';
 interface ProfileProps{
    setShowNavigationMenu: Dispatch<SetStateAction<boolean>>;
    showProfileMenu: boolean;
@@ -29,7 +30,7 @@ export function Profile({setShowNavigationMenu, showProfileMenu, setShowProfileM
             >
                 {/*rendering an image either if user has a profile picture or default avatar image*/}
                 <img className={`${classes.top} ${classes.avatar}`}
-                src={user?.profilePicture || "/me.jpeg"} alt=''
+                src={user?.profilePicture || defaultAvatarSrc} alt=''
                 />
                 {/* below profile pic we have user name and the last name first char and a dot */}
                 <div className={classes.name}>
@@ -43,7 +44,7 @@ export function Profile({setShowNavigationMenu, showProfileMenu, setShowProfileM
             <img
               className={`${classes.left} ${classes.avatar}`}
               src={
-                user?.profilePicture || "/me.jpeg"
+                user?.profilePicture || defaultAvatarSrc
               }
               alt=""
             />

@@ -5,6 +5,7 @@ import {
   useAuthentication,
   type User,
 } from "../../../authentication/contexts/AuthenticationContextProvider";
+import defaultAvatarSrc from "../../../../assets/me.jpeg";
 
 import { TimeAgo } from "../TimeAgo/TimeAgo";
 import classes from "./Comment.module.scss";
@@ -42,7 +43,7 @@ export function Comment({ comment, deleteComment, editComment }: CommentProps) {
             >
               <img
                 className={classes.avatar}
-                src={comment.author.profilePicture || "/me.jpeg"}
+                src={comment.author.profilePicture || defaultAvatarSrc}
                 alt=""
               />
               <div>

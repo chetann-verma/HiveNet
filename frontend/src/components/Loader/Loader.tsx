@@ -1,4 +1,5 @@
 import classes from "./Loader.module.scss";
+import logoSrc from "../../assets/Logo.png";
 
 export function Loader() {
   return (
@@ -14,7 +15,7 @@ export function Loader() {
           <span></span>
         </div>
 
-        <img src="/Logo.png" alt="Loading..." />
+        <img src={logoSrc} alt="Loading..." />
       </div>
     </div>
   );

@@ -1,15 +1,17 @@
 import { useAuthentication } from "../../../authentication/contexts/AuthenticationContextProvider";
 import classes from "./LeftSidebar.module.scss";
+import wallpaperSrc from "../../../../assets/wallpaper.jpg";
+import defaultAvatarSrc from "../../../../assets/me.jpeg";
 export function LeftSidebar()
 {
     const {user} = useAuthentication();
     return (
         <div className={classes.root}>
             <div className={classes.cover}>
-                <img src="/wallpaper.jpg" alt="Cover"/>
+                <img src={wallpaperSrc} alt="Cover"/>
             </div>
             <div className={classes.avatar}>
-                <img src={user?.profilePicture || "/me.jpeg"} alt=""/>
+                <img src={user?.profilePicture || defaultAvatarSrc} alt=""/>
             </div>
             <div className={classes.name}>{user?.firstName + " " + user?.lastName}</div>
             <div className={classes.title}>{user?.position + " at " + user?.company}</div>
